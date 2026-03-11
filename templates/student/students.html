@@ -6,7 +6,7 @@
 </head>
 
 <body class="bg-gray-100 p-10">
-
+<button><a href="{% url 'add_student' %}" class="bg-blue-500 text-white px-3 py-1 rounded border-gray-300">add student</a></button>
 <h1 class="text-3xl font-bold mb-8 text-center">Students management system</h1>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -22,15 +22,19 @@
     <p class="text-gray-600 mb-4">Phone: {{ student.phone }}</p>
 
     <div class="flex justify-between">
-        <button class="bg-blue-500 text-white px-3 py-1 rounded">View</button>
-        <button class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
-        <button class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+        <a href="{% url 'update_student' student.id %}">
+    <button class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
+</a>
+<a href="{% url 'delete_student' student.id %}">
+    <button class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+</a>
+
+
     </div>
 
 </div>
 
 {% endfor %}
-
 </div>
 
 </body>
