@@ -13,23 +13,33 @@
 
 {% for student in student_data %}
 
-<div class="bg-white p-6 rounded-xl shadow">
+<div class="bg-white p-6 rounded-xl shadow flex justify-between items-center">
 
-    <h2 class="text-xl font-semibold mb-2">{{ student.name }}</h2>
+    <!-- Left Side (Student Info) -->
+    <div>
+        <h2 class="text-xl font-semibold mb-2">{{ student.name }}</h2>
+        <p class="text-gray-600">Email: {{ student.email }}</p>
+        <p class="text-gray-600 mb-4">Phone: {{ student.phone }}</p>
 
-    <p class="text-gray-600">Email: {{ student.email }}</p>
+        <div class="flex gap-2">
+            <a href="{% url 'update_student' student.id %}">
+                <button class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
+            </a>
+            <a href="{% url 'delete_student' student.id %}">
+                <button class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+            </a>
+        </div>
+    </div>
 
-    <p class="text-gray-600 mb-4">Phone: {{ student.phone }}</p>
-
-    <div class="flex justify-between">
-        <a href="{% url 'update_student' student.id %}">
-    <button class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
-</a>
-<a href="{% url 'delete_student' student.id %}">
-    <button class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
-</a>
-
-
+    <!-- Right Side (Student Image) -->
+    <div>
+        {% if student.image %}  <!-- ✅ FIX — pehle check karo image hai ya nahi -->
+<img src="{{ student.image.url }}" class="w-20 h-20 rounded-full object-cover">
+        {% else %}
+            <div class="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 text-sm">
+                No Image
+            </div>
+        {% endif %}
     </div>
 
 </div>

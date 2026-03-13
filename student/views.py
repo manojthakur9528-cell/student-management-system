@@ -11,13 +11,15 @@ def add_students(request):
         student_name = request.POST.get('input_name')
         student_email = request.POST.get('input_email')
         student_phone = request.POST.get('input_phone')
+        student_image = request.FILES.get('input_photo')
 
-        Student.objects.create(      # ✅ pehle create karo
+        Student.objects.create(
             name=student_name,
             email=student_email,
             phone=student_phone,
+            image=student_image,
         )
-        return redirect("students")  # ✅ phir redirect karo
+        return redirect("students")
     return render(request, 'student/add_students.html')
 
 def delete_student(request, id):
@@ -28,10 +30,13 @@ def delete_student(request, id):
 def update_student(request, id):
     student = Student.objects.get(id=id)
     if request.method == "POST":
-        student.name = request.POST.get('input_name')    # ✅ input_name
-        student.email = request.POST.get('input_email')  # ✅ input_email
-        student.phone = request.POST.get('input_phone')  # ✅ phone (not phone_number)
-        student.save()             # ✅ uncomment kiya
-        return redirect('students') # ✅ uncomment kiya
+        student.name = request.POST.get('input_name')
+        student.email = request.POST.get('input_email')
+        student.phone = request.POST.get('input_phone')
+        student_image = request.FILES.get('input_photo')
+        if student_image:                  # ✅ FIX — image save ho rahi hai ab
+            student.image = student_image
+        student.save()
+        return redirect('students')
     parameters = {"student": student}
     return render(request, "student/update_student.html", parameters)
